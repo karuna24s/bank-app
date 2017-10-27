@@ -16,14 +16,12 @@ Account.prototype.greeting = function(amount) {
 
   rl.close();
 });
-  // var answer = readline("What is your favorite movie?");
 }
 
 Account.prototype.deposit = function(amount) {
   if (this._isPositive(amount)) {
     this.balance += amount;
     console.log(`Deposit: ${this.name} new balance is ${this.balance}`);
-    // console.log("Your balance is now " + this.balance);
     return true;
   }
   return false;
@@ -33,7 +31,6 @@ Account.prototype.withdraw = function(amount) {
   if (this._isAllowed(amount)) {
     this.balance -= amount;
     console.log(`Withdraw: ${this.name} new balance is ${this.balance}`);
-    // console.log("Your balance is now " + this.balance);
     return true;
   }
   return false;
@@ -68,11 +65,6 @@ Account.prototype._isAllowed = function(amount) {
   return true;
 }
 
-// let BeenuAccount = new Account ("Beenu", 5000);
 let KarunaAccount = new Account ("Karuna", 10000);
-// let BrownieAccount = new Account ("Brownie", 70000000);
-// let OreoAccount = new Account ("Oreo", 900000000);
 
 KarunaAccount.greeting(10000);
-// BeenuAccount.transfer(1000, KarunaAccount);
-// console.log(BeenuAccount.balance);
