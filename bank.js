@@ -4,67 +4,70 @@ var rl = readline.createInterface({
   output: process.stdout
 });
 
-function Account(name, balance) {
-  this.name = name;
+function start(balance) {
   this.balance = balance;
+  var name = rl.question("Hello! Welcome to Citibank! What is you name? ", function(name) {
+    var decision = rl.question(name + ", would you like to see your balance, make a withdraw or make a deposit? ", function(decision){
+      if (decision == "balance") {
+        console.log("Your balance is $" + this.balance);
+      } else if (decision == "withdraw") {
+        this.balance = withdraw(this.balance);
+      } else if (decision == "deposit") {
+        this.balance = deposit(this.balance);
+      }
+      else {
+        var restart = rl.question("You did not make an appropriate decision, start from the beginning? Enter in yes, or no " , function(answer) {
+          if (restart == "yes") {
+            start(this.balance);
+          } else {
+            console.log("Goodbye, thanks for banking with Citibank!");
+            }
+           rl.close();
+        });
+      }
+    //  rl.close();
+    });
+    // rl.close();
+  });
 }
 
-Account.prototype.greeting = function(amount) {
-  console.log("Welcome to Citibank! How can I help you today?");
-  rl.question("Hello! What is you name? ", function(answer) {
-    console.log(answer + ", would you like to see your balance, make a withdraw or make a deposit?");
-
-  rl.close();
-});
+function deposit(balance) {
+  this.balance = balance;
+  console.log(this.balance);
+  console.log(balance);
+  var amount = parseInt(rl.question("How much would you like to deposit? ", function(amount) {
+    if (isPositive(amount)) {
+      var newBalance = this.balance + amount;
+      console.log(
+        "Your new balance is $" +
+          newBalance +
+          ". Goodbye, thanks for banking with Citibank!"
+      );
+      return newBalance;
+    } else {
+      //if negative, prompts user to tryagain
+      var tryAgain = rl.question("You amount was either a negative value. Would you like to try again? Enter yes or no ", function(tryAgain) {
+        if (tryAgain == "Y") {
+          deposit(this.balance);
+        }
+        rl.close();
+      });
+    }
+   rl.close();
+  }), 0);
 }
 
-Account.prototype.deposit = function(amount) {
-  if (this._isPositive(amount)) {
-    this.balance += amount;
-    console.log(`Deposit: ${this.name} new balance is ${this.balance}`);
-    return true;
-  }
-  return false;
-}
-
-Account.prototype.withdraw = function(amount) {
-  if (this._isAllowed(amount)) {
-    this.balance -= amount;
-    console.log(`Withdraw: ${this.name} new balance is ${this.balance}`);
-    return true;
-  }
-  return false;
-}
-
-Account.prototype.transfer = function(amount, account) {
-  if (this.withdraw(amount) && account.deposit(amount)) {
-    console.info(`Transfer: ${amount} has been moved from ${this.name} to ${account.name}`);
-    return true;
-  }
-  return false;
-}
-
-
-Account.prototype._isPositive = function(amount) {
-  const isPositive = amount > 0;
-  if (!isPositive) {
-    console.error('Amount must be positive!');
+function isPositive(amount) {
+  this.amount = amount;
+  if (this.amount < 0) {
+    console.log("You didn't enter a positive value!");
     return false;
+  } else {
+    return true;
   }
-  return true;
 }
 
-Account.prototype._isAllowed = function(amount) {
-  if (!this._isPositive(amount)) return false;
-
-  const isAllowed = this.balance - amount >= 0;
-  if (!isAllowed) {
-    console.error('You have insufficent funds!');
-    return false;
-  }
-  return true;
-}
-
-let KarunaAccount = new Account ("Karuna", 10000);
-
-KarunaAccount.greeting(10000);
+start(100);
+// let KarunaAccount = new Account ("Karuna", 10000);
+//
+// KarunaAccount.greeting(10000);
