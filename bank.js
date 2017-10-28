@@ -10,6 +10,8 @@ function start(balance) {
     var decision = rl.question(name + ", would you like to see your balance, make a withdraw or make a deposit? ", function(decision){
       if (decision == "balance") {
         console.log("Your balance is $" + this.balance);
+        console.log("Goodbye, thanks for banking with Citibank!");
+        rl.close();
       } else if (decision == "withdraw") {
         this.balance = withdraw(this.balance);
       } else if (decision == "deposit") {
@@ -25,36 +27,74 @@ function start(balance) {
            rl.close();
         });
       }
-    //  rl.close();
     });
-    // rl.close();
   });
 }
 
-function deposit(balance) {
-  this.balance = balance;
-  console.log(this.balance);
-  console.log(balance);
-  var amount = parseInt(rl.question("How much would you like to deposit? ", function(amount) {
-    if (isPositive(amount)) {
-      var newBalance = this.balance + amount;
+function withdraw(balance) {
+  // this.balance = balance;
+  var amount = rl.question("How much would you like to withdraw?", function(amount) {
+    this.balance = balance;
+    //check if balance is greater than withdrawal amt
+    if (this.balance < amount) {
+      var tryAgain = rl.question("Sorry, your balance of $" + this.balance +
+      " is too low to withdraw that amount. Would you like to try again? Enter yes or no ", function(tryAgain) {
+        if (tryAgain == "yes") {
+          withdraw(this.balance);
+        } else {
+          console.log("Goodbye, thanks for banking with Citibank!");
+          rl.close();
+        }
+      });
+      //check if amount is positive
+    } else if (isPositive(amount)) {
+      var newBalance = parseInt(this.balance) - parseInt(amount);
       console.log(
         "Your new balance is $" +
           newBalance +
           ". Goodbye, thanks for banking with Citibank!"
       );
+      rl.close();
+      return newBalance;
+    } else {
+      //prompt user to try again, if negative
+      var tryAgain = rl.question(
+        "You amount was either a negative value. Would you like to try again? Enter yes or no ", function(tryAgain) {
+          if (tryAgain == "yes") {
+            withdraw(this.balance);
+          } else {
+            console.log("Goodbye, thanks for banking with Citibank!");
+            rl.close();
+          }
+      });
+    }
+  });
+}
+
+function deposit(balance) {
+  var amount = rl.question("How much would you like to deposit? ", function(amount) {
+    this.balance = balance;
+    if (isPositive(amount)) {
+      var newBalance = parseInt(this.balance) + parseInt(amount);
+      console.log(
+        "Your new balance is $" +
+          newBalance +
+          ". Goodbye, thanks for banking with Citibank!"
+      );
+      rl.close();
       return newBalance;
     } else {
       //if negative, prompts user to tryagain
       var tryAgain = rl.question("You amount was either a negative value. Would you like to try again? Enter yes or no ", function(tryAgain) {
-        if (tryAgain == "Y") {
+        if (tryAgain == "yes") {
           deposit(this.balance);
+        } else {
+          console.log("Goodbye, thanks for banking with Citibank!");
+          rl.close();
         }
-        rl.close();
       });
     }
-   rl.close();
-  }), 0);
+  });
 }
 
 function isPositive(amount) {
@@ -68,6 +108,3 @@ function isPositive(amount) {
 }
 
 start(100);
-// let KarunaAccount = new Account ("Karuna", 10000);
-//
-// KarunaAccount.greeting(10000);

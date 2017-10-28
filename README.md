@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Bank Web App, where users make deposits, withdrawals and transfers.
+Bank Web App, where users make deposits, withdrawals and check the balance.
 
 ### Usage
 
