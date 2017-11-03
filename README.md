@@ -6,10 +6,10 @@ Bank Web App, where users make deposits, withdrawals and check the balance.
 
 ### Usage
 
-Clone the repo and then you can run the bank.js file:
+Clone the repo and then you can run the js/bank.js file:
 
 ```
-$ node bank.js
+$ node js/bank.js
 ```
 
 ### Contributing
