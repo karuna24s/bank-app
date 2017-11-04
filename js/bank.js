@@ -7,7 +7,7 @@ var rl = readline.createInterface({
 function start(balance) {
   this.balance = balance;
   var name = rl.question("Hello! Welcome to Citibank! What is you name? ", function(name) {
-    var decision = rl.question(name + ", would you like to open an account, see your balance, make a withdrawal, mmake a deposit or close an account? ", function(decision){
+    var decision = rl.question(name + ", would you like to: \n open an account, \n see your balance, \n make a withdrawal, \n make a deposit or \n close an account? ", function(decision){
       if (decision == "balance") {
         console.log("Your balance is $" + this.balance);
         console.log("Goodbye, thanks for banking with Citibank!");
@@ -22,13 +22,14 @@ function start(balance) {
         this.balance = close(this.balance);
       }
       else {
-        var restart = rl.question("You did not make an appropriate decision, start from the beginning? Enter in yes, or no " , function(answer) {
+        var restart = rl.question("You did not make an appropriate decision, start from the beginning? Enter in yes, or no . " , function(restart) {
           if (restart == "yes") {
             start(this.balance);
-          } else {
+          }
+          else {
             console.log("Goodbye, thanks for banking with Citibank!");
+             rl.close();
             }
-           rl.close();
         });
       }
     });
