@@ -12,8 +12,8 @@ function run(balance) {
   });
 }
 
-function transaction(name, balance) {
-  var decision = rl.question(name + ", would you like to: \n"
+function transaction(balance) {
+  var selection = rl.question("Would you like to: \n"
     + "1. See your balance \n"
     + "2. Open an account \n"
     + "3. Make a withdrawal \n"
@@ -37,6 +37,8 @@ function transaction(name, balance) {
     }
   });
 }
+
+
 
 
 function openAccount(balance) {
