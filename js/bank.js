@@ -5,7 +5,7 @@ var rl = readline.createInterface({
 });
 
 
-function bank(balance) {
+function run(balance) {
   this.balance = balance;
   var name = rl.question("Hello! Welcome to Citibank! What is you name? ", function(name) {
     transaction(name, balance);
@@ -13,25 +13,25 @@ function bank(balance) {
 }
 
 function transaction(name, balance) {
-  var transaction = rl.question(name + ", would you like to: \n"
+  var decision = rl.question(name + ", would you like to: \n"
     + "1. See your balance \n"
     + "2. Open an account \n"
     + "3. Make a withdrawal \n"
     + "4. Make a deposit \n"
     + "5. Close an account \n"
-    + "Please type in the number corresponding to the option. ", function(transaction){
-    if (transaction == "1") {
+    + "Please type in the number corresponding to the option. ", function(selection){
+    if (selection == "1") {
       console.log("Your balance is $" + this.balance);
       rl.close();
-      message();
-    } else if (transaction == "2") {
-      this.balance = open(this.balance);
-    } else if (transaction == "3") {
+      closingMessage();
+    } else if (selection == "2") {
+      this.balance = openAccount(this.balance);
+    } else if (selection == "3") {
       this.balance = withdraw(this.balance);
-    } else if (transaction == "4") {
+    } else if (selection == "4") {
       this.balance = deposit(this.balance);
-    } else if (transaction == "5") {
-      this.balance = close(this.balance);
+    } else if (selection == "5") {
+      this.balance = closeAccount(this.balance);
     } else {
       restart();
     }
@@ -39,18 +39,18 @@ function transaction(name, balance) {
 }
 
 
-function open(balance) {
+function openAccount(balance) {
   this.balance = balance;
   console.log("Your Account has been created and the balance you have is $" + this.balance + ".");
   rl.close();
-  message();
+  closingMessage();
 }
 
-function close(balance) {
+function closeAccount(balance) {
   this.balance = balance;
   console.log("Your Account has been closed and the balance you have is $" + this.balance + ".")
   rl.close();
-  message();
+  closingMessage();
 }
 
 function deposit(balance) {
@@ -60,7 +60,7 @@ function deposit(balance) {
       var newBalance = parseInt(this.balance) + parseInt(amount);
       console.log("Your new balance is $" + newBalance + ".");
       rl.close();
-      message();
+      closingMessage();
       return newBalance;
     }
     else {
@@ -69,7 +69,7 @@ function deposit(balance) {
           deposit(this.balance);
         } else {
           rl.close();
-          message();
+          closingMessage();
         }
       });
     }
@@ -86,7 +86,7 @@ function withdraw(balance) {
           withdraw(this.balance);
         } else {
           rl.close();
-          message();
+          closingMessage();
         }
       });
     }
@@ -94,7 +94,7 @@ function withdraw(balance) {
       var newBalance = parseInt(this.balance) - parseInt(amount);
       console.log("Your new balance is $" + newBalance + ".");
       rl.close();
-      message();
+      closingMessage();
       return newBalance;
     }
     else {
@@ -104,7 +104,7 @@ function withdraw(balance) {
             withdraw(this.balance);
           } else {
             rl.close();
-            message();
+            closingMessage();
           }
       });
     }
@@ -121,20 +121,20 @@ function isPositive(amount) {
   }
 }
 
-function message() {
+function closingMessage() {
   console.log("Goodbye, thanks for banking with Citibank!");
 }
 
 function restart() {
-  var restart = rl.question("You did not make an appropriate decision, start from the beginning? Enter in yes, or no. " , function(restart) {
+  var restart = rl.question("You did not make an appropriate selection, start from the beginning? Enter in yes, or no. " , function(restart) {
     if (restart == "yes") {
-      bank(this.balance);
+      run(this.balance);
     }
     else {
       rl.close();
-      message();
+      closingMessage();
     }
   });
 }
 
-bank(100);
+run(100);
