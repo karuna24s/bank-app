@@ -8,7 +8,7 @@ var rl = readline.createInterface({
 function run(balance) {
   this.balance = balance;
   var name = rl.question("Hello! Welcome to Citibank! What is you name? ", function(name) {
-    transaction(name, balance);
+    transaction(balance);
   });
 }
 
